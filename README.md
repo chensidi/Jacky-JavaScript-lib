@@ -39,4 +39,5 @@ console.log(res) // [2, 4, 6]
 
 + [x] `oFill(arr: any[], arr: any[], value: any, start = 0, end = arr.length)`
   对应原生js中array的fill方法
-  
+
+目前Array的方法大部分已经实现... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数

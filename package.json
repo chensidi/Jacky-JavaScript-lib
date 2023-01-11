@@ -1,6 +1,16 @@
 {
   "name": "jacky-js-tools",
-  "version": "1.0.2",
+  "author": {
+    "name": "Jacky Cheung",
+    "email": "2541012495@qq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chensidi/Jacky-JavaScript-lib.git"
+  },
+  "homepage": "https://github.com/chensidi/Jacky-JavaScript-lib",
+  "bugs": "https://github.com/chensidi/Jacky-JavaScript-lib/issues",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
