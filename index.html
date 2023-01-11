@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<!-- <script src="./dist/index.aio.js"></script>
+<script>
+(async () => {
+  const res = await jTools.getData()
+  console.log(res)
+})()
+</script> -->
+<script type="module">
+import {oMap} from './dist/index.esm.js'
+const res = oMap([1,2,3], item => item * 2)
+console.log(res);
+</script>
+</html>
