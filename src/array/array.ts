@@ -56,9 +56,9 @@ function oConcat(arr: readonly any[], ...rest: any[]): any[] {
 }
 
 // find
-function oFind(arr: any[], callback: normalCallback) {
+function oFind(arr: any[], callback: normalCallback<boolean>, thisArg: any) {
   for (let i = 0; i < arr.length; i ++) {
-    if (callback(arr[i], i, arr)) {
+    if (callback.apply(thisArg, [arr[i], i, arr])) {
       return arr[i]
     }
   }
@@ -66,7 +66,7 @@ function oFind(arr: any[], callback: normalCallback) {
 }
 
 // findIndex
-function oFindIndex(arr: any[], callback: normalCallback, thisArg: any) {
+function oFindIndex(arr: any[], callback: normalCallback<boolean>, thisArg: any) {
   for (let i = 0; i < arr.length; i ++) {
     if (callback.apply(thisArg, [arr[i], i, arr])) {
       return i
@@ -125,7 +125,7 @@ function oForEach(arr: any[], callback: normalCallback, thisArg: any): void {
 }
 
 // includes
-function oIncludes(arr: any[], item: any, fromIndex = 0) {
+function oIncludes(arr: any[], item: any, fromIndex = 0): boolean {
   if (typeof fromIndex !== 'number') {
     fromIndex = toNum(fromIndex)
   }
@@ -143,7 +143,7 @@ function oIncludes(arr: any[], item: any, fromIndex = 0) {
 }
 
 // indexOf
-function oIndexOf(arr: any[], item: any, fromIndex = 0) {
+function oIndexOf(arr: any[], item: any, fromIndex = 0): number {
   if (typeof fromIndex !== 'number') {
     fromIndex = toNum(fromIndex)
   }
@@ -161,7 +161,7 @@ function oIndexOf(arr: any[], item: any, fromIndex = 0) {
 }
 
 // isArray
-function oIsArray(arr: ArrayType) {
+function oIsArray(arr: ArrayType): boolean {
   return arr instanceof Array && arr instanceof Object &&
   arr.constructor === Array && arr.__proto__ === Array.prototype
 }

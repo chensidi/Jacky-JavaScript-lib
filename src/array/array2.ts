@@ -128,7 +128,7 @@ function oReverse(arr: any[]) {
 }
 
 // push
-function oPush(arr: any[], ...rest: any[]) {
+function oPush(arr: any[], ...rest: any[]): number {
   for (let i = 0; i < rest.length; i ++) {
     arr[arr.length] = rest[i]
     if (i === rest.length - 1) {

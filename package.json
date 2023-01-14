@@ -4,13 +4,20 @@
     "name": "Jacky Cheung",
     "email": "2541012495@qq.com"
   },
+  "keywords": [
+    "TypeScript",
+    "JavaScript",
+    "es6",
+    "rollup",
+    "jest"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/chensidi/Jacky-JavaScript-lib.git"
   },
   "homepage": "https://github.com/chensidi/Jacky-JavaScript-lib",
   "bugs": "https://github.com/chensidi/Jacky-JavaScript-lib/issues",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
