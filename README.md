@@ -113,4 +113,57 @@ console.log(res) // [2, 4, 6]
 + [x] `oUnshift(arr: any[], ...rest: any[]): number`
   对应原生js中array的unshift方法
 
-目前Array的方法大部分已经实现... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数
++ [x] `oSlice(arr: any[], start = 0, end = Infinity): any[]`
+  对应原生js中array的slice方法
+
++ [x] `oSplice(arr: any[], start: number, deleteCount: number, ...rest: any[])`
+  对应原生js中array的splice方法
+
+### String字符串原生方法的实现
+
+> 字符串的方法，以 `oStr` 为前缀，例如 `oStrStartsWith` 对应原生 `startsWith`, 传参方式依旧，第一个参数是目标字符串本身，后续参数按原生方法中的顺序传入， 示例如下
+
+```ts
+// 原生js方法
+const str = 'Jacky Chueng'
+str.startsWith('Jacky') // true
+str.startsWith('Jacky', 1) // false
+```
+
+```ts
+// 本库中方法
+import { oStrStartsWith } from 'jacky-js-tools'
+const str = 'Jacky Chueng'
+oStrStartsWith(str, 'Jacky') // true
+oStrStartsWith(str, 'Jacky', 1) // false
+```
+
+- [x] `oStringIterator(str: string)`
+  这是用来生成字符串迭代器的方法
+  
+  ```ts
+  const str = '123'
+    const arr: string[] = []
+    const itr = oStringIterator(str)
+    for (let item of itr) {
+      arr.push(item)
+    }
+    console.log(arr) // ['1', '2', '3']
+  ```
+
+- [x] `oStringGenerator(str: string)`
+  这是也用来生成字符串迭代器的方法，只不过使用 generator 函数实现，调用方式与上一个一致
+
+- [x] `oStrAt(str: string, index: number): string`
+  对应原生string的 `at` 方法
+
+- [x] `oStrCharAt(str: string, index: number): string`
+  对应原生string的 `charAt` 方法
+
+- [x] `oStrStartsWith(str: string, subStr: string, position = 0): boolean`
+  对应原生string的 `startsWith` 方法
+
+- [x] `oStrEndsWith(str: string, subStr: string, length = str.length): boolean`
+  对应原生string的 `endsWith` 方法
+
+目前Array的方法大部分已经实现, String的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数

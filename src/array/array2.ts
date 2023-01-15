@@ -158,12 +158,63 @@ function oShift(arr: any[]) {
 }
 
 // unShift
-function oUnshift(arr: any[], ...rest: any[]) {
+function oUnshift(arr: any[], ...rest: any[]): number {
   const newArr = [...rest, ...arr]
   newArr.forEach((item, i) => {
     arr[i] = item
   })
   return arr.length
+}
+
+// slice
+function oSlice(arr: any[], start = 0, end = Infinity): any[] {
+  start = toNum(start)
+  end = toNum(end)
+  if (start < 0) start += arr.length
+  if (start < 0) start = 0
+  if (start > arr.length) return []
+  if (end < 0) end += arr.length
+  if (end < 0) return []
+  if (end > arr.length) end = arr.length
+  const list = []
+  for (let i = start; i < end; i ++) {
+    list.push(arr[i])
+  }
+  return list
+}
+
+// splice
+function oSplice(arr: any[], start: number, deleteCount: number, ...rest: any[]) {
+  start = toNum(start)
+  deleteCount = toNum(deleteCount)
+  if (start < 0) start += arr.length
+  if (start < 0) start = 0
+  if (deleteCount < 0) deleteCount = 0
+  let removeFront = deleteCount - rest.length
+  while (deleteCount > 0) {
+    arr[start++] = rest.shift()                     
+    deleteCount --
+  }
+  while (removeFront > 0 && start < arr.length) {
+    arr[start - removeFront] = arr[start]
+    start ++
+  }
+  if (removeFront > 0) {
+    arr.length -= removeFront
+  }
+  if (rest.length) {
+    const dis = rest.length
+    const oldLen = arr.length
+    arr.length += rest.length
+    
+    for (let i = 0; i < dis; i ++) {
+      arr[arr.length - 1 - i] = arr[oldLen - i - 1]
+    }
+    while (rest.length) {
+      arr[start + dis] = arr[start]
+      arr[start ++] = rest.shift()
+    }
+  }
 }
 
 export {
@@ -179,4 +230,6 @@ export {
   oPop,
   oShift,
   oUnshift,
+  oSlice,
+  oSplice,
 }

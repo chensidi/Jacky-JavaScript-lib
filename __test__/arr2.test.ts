@@ -10,6 +10,8 @@ const {
   oPop,
   oShift,
   oUnshift,
+  oSlice,
+  oSplice,
 } = require('../dist/index')
 
 describe('测试array的join方法', () => {
@@ -49,7 +51,6 @@ describe('测试array的keys方法', () => {
   test('常规测试', () => {
     const keys = oArrKeys([1,2,3])
     for (let i of keys) {
-      console.log(i)
     }
   })
 })
@@ -229,3 +230,83 @@ describe('测试array的unShift方法', () => {
     expect(len).toBe(3)
   })
 })
+
+describe('测试array的slice方法', () => {
+  test('常规测试', () => {
+    const list = oSlice([1,2,3,4], 2)
+    expect(list).toEqual([3, 4])
+  })
+  test('常规测试2', () => {
+    const list = oSlice([1,2,3,4], 2, 3)
+    expect(list).toEqual([3])
+  })
+  test('常规测试3', () => {
+    const list = oSlice([1,2,3,4])
+    expect(list).toEqual([1,2,3,4])
+  })
+  test('测试传负数start', () => {
+    const list = oSlice([1,2,3,4], -100)
+    expect(list).toEqual([1,2,3,4])
+  })
+  test('测试传负数end', () => {
+    const list = oSlice([1,2,3,4], 1, -1)
+    expect(list).toEqual([2, 3])
+  })
+  test('测试2传负数end', () => {
+    const list = oSlice([1,2,3,4], 1, -100)
+    expect(list).toEqual([])
+  })
+  test('测试传非数字下标', () => {
+    const list = oSlice([1,2,3,4], true, '10')
+    expect(list).toEqual([2,3,4])
+  })
+})
+
+describe('测试array的splice方法', () => { 
+  test('常规测试', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, 1, 1, 100)
+    expect(arr).toEqual([1, 100, 3, 4])
+  })
+  test('常规测试2', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, 1, 1, 100, 100, 100)
+    expect(arr).toEqual([1, 100, 100, 100, 3, 4])
+  }) 
+  test('常规测试3', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, 1, 2, 100, 100)
+    expect(arr).toEqual([1, 100, 100, 4])
+  }) 
+  test('常规测试4', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, 1, 2, 100)
+    expect(arr).toEqual([1, 100, 4])
+  }) 
+  test('常规测试5', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, 1, 2)
+    expect(arr).toEqual([1, 4])
+  })
+  test('测试负参数1', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, -1, 2)
+    expect(arr).toEqual([1,2,3])
+  })
+  test('测试负参数2', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, -1, -2)
+    expect(arr).toEqual([1,2,3,4])
+  })
+  test('测试负参数3', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr, -10, 2)
+    expect(arr).toEqual([3,4])
+  })
+  test('不传参数', () => {
+    const arr = [1,2,3,4]
+    oSplice(arr)
+    expect(arr).toEqual([1,2,3,4])
+  })
+})
+
