@@ -1,5 +1,5 @@
-import { toNum, isOneDimensionalList } from '../utils'
-import type { normalCallback, ArrayType } from '../types/arr.type'
+import { toNum, isOneDimensionalList } from '@utils'
+import type { normalCallback, ArrayType } from '@/types/arr.type'
 
 // map
 function oMap(arr: any[], callback: normalCallback) {

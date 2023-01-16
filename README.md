@@ -138,7 +138,7 @@ oStrStartsWith(str, 'Jacky') // true
 oStrStartsWith(str, 'Jacky', 1) // false
 ```
 
-- [x] `oStringIterator(str: string)`
++ [x] `oStringIterator(str: string)`
   这是用来生成字符串迭代器的方法
   
   ```ts
@@ -151,19 +151,25 @@ oStrStartsWith(str, 'Jacky', 1) // false
     console.log(arr) // ['1', '2', '3']
   ```
 
-- [x] `oStringGenerator(str: string)`
++ [x] `oStringGenerator(str: string)`
   这是也用来生成字符串迭代器的方法，只不过使用 generator 函数实现，调用方式与上一个一致
 
-- [x] `oStrAt(str: string, index: number): string`
++ [x] `oStrAt(str: string, index: number): string`
   对应原生string的 `at` 方法
 
-- [x] `oStrCharAt(str: string, index: number): string`
++ [x] `oStrCharAt(str: string, index: number): string`
   对应原生string的 `charAt` 方法
 
-- [x] `oStrStartsWith(str: string, subStr: string, position = 0): boolean`
++ [x] `oStrStartsWith(str: string, subStr: string, position = 0): boolean`
   对应原生string的 `startsWith` 方法
 
-- [x] `oStrEndsWith(str: string, subStr: string, length = str.length): boolean`
++ [x] `oStrEndsWith(str: string, subStr: string, length = str.length): boolean`
   对应原生string的 `endsWith` 方法
 
-目前Array的方法大部分已经实现, String的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数
++ [x] `oStrIncludes(str: string, subStr: string, position = 0): boolean`
+  对应原生string的 `includes` 方法
+
++ [x] `oStrIndexOf(str: string, subStr: string, position = 0): number`
+  对应原生string的 `indexOf` 方法
+
+目前Array的方法大部分已经实现, String的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法

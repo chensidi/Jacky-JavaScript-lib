@@ -5,6 +5,8 @@ const {
   oStrCharAt,
   oStrStartsWith,
   oStrEndsWith,
+  oStrIncludes,
+  oStrIndexOf,
 } = require('../dist/index')
 
 describe('测试string的迭代器', () => {
@@ -161,4 +163,80 @@ describe('测试string的endsWith', () => {
       }, 5)
     ).toBe(true)
   })
+})
+
+describe('测试string的includes', () => { 
+  test('常规测试', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'Jacky')
+    ).toBe(true)
+  })
+  test('常规测试1', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'Jackys')
+    ).toBe(false)
+  })
+  test('常规测试2', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'ac', 1)
+    ).toBe(true)
+  })
+  test('常规测试3', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'Ja', 1)
+    ).toBe(false)
+  })
+  test('常规测试4', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', '', 1)
+    ).toBe(true)
+  })
+  test('测试负下标', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'eung', -10)
+    ).toBe(true)
+  })
+  test('测试越界下标', () => {
+    expect(
+      oStrIncludes('Jacky Cheung', 'eung', 100)
+    ).toBe(false)
+  })
+})
+
+describe('测试string的indexOf', () => {
+  test('常规测试', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Jac')
+    ).toBe(0)
+  })
+  test('常规测试1', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Jacks')
+    ).toBe(-1)
+  })
+  test('常规测试2', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Jack', 1)
+    ).toBe(-1)
+  })
+  test('常规测试2', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Cheung', 1)
+    ).toBe(6)
+  })
+  test('常规测试3', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', '', 1)
+    ).toBe(1)
+  })
+  test('测试越界', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Jacky', 100)
+    ).toBe(-1)
+  })
+  test('测试负下标', () => {
+    expect(
+      oStrIndexOf('Jacky Cheung', 'Ch', -100)
+    ).toBe(6)
+  }) 
 })

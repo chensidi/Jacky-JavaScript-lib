@@ -1,4 +1,4 @@
-import { toNum, toString } from '../utils'
+import { toNum, toString } from '@utils'
 
 /* 
   字符串原生es方法
@@ -86,6 +86,58 @@ function oStrEndsWith(str: string, subStr: string, length = str.length): boolean
   return true
 }
 
+// includes
+function oStrIncludes(str: string, subStr: string, position = 0): boolean {
+  if (subStr === '') return true
+  position = toNum(position)
+  if (position < 0) position = 0
+  if (position >= str.length) return false
+  if (str.length - position < subStr.length) return false
+  let idx = position
+  while (idx < str.length) {
+    if (str.length - idx < subStr.length) return false
+    let iIdx = idx
+    let i = 0
+    while (i < subStr.length) {
+      if (subStr[i] !== str[iIdx ++]) {
+        break
+      }
+      i ++
+    }
+    if (i === subStr.length) {
+      return true
+    }
+    idx ++
+  }
+  return false
+}
+
+// indexOf
+function oStrIndexOf(str: string, subStr: string, position = 0): number {
+  position = toNum(position)
+  if (position < 0) position = 0
+  if (position > str.length) position = str.length
+  if (subStr === '') return position
+  if (str.length - position < subStr.length) return -1
+  let idx = position
+  while (idx < str.length) {
+    if (str.length - idx < subStr.length) return -1
+    let iIdx = idx
+    let i = 0
+    while (i < subStr.length) {
+      if (subStr[i] !== str[iIdx ++]) {
+        break
+      }
+      i ++
+    }
+    if (i === subStr.length) {
+      return idx
+    }
+    idx ++
+  }
+  return -1
+}
+
 export {
   oStringIterator,
   oStringGenerator,
@@ -93,4 +145,6 @@ export {
   oStrCharAt,
   oStrStartsWith,
   oStrEndsWith,
+  oStrIncludes,
+  oStrIndexOf,
 }

@@ -1,5 +1,5 @@
-import { toNum, isOneDimensionalList, toString } from '../utils'
-import type { ReduceCallback, ArrayEntry, normalCallback } from '../types/arr.type'
+import { toNum, isOneDimensionalList, toString } from '@utils'
+import type { ReduceCallback, ArrayEntry, normalCallback } from '@/types/arr.type'
 
 // join
 function oJoin(arr: any[], flag: string = ','): string {
