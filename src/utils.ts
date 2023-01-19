@@ -23,8 +23,13 @@ function isOneDimensionalList(list: any[]) {
   return !list.some(item => Array.isArray(item))
 }
 
+const trimStartReg = /^( )+\s/
+const trimEndReg = /\s( )+$/
+
 export {
   host,
+  trimStartReg,
+  trimEndReg,
   toNum,
   toString,
   isOneDimensionalList,

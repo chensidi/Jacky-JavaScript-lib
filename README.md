@@ -172,4 +172,31 @@ oStrStartsWith(str, 'Jacky', 1) // false
 + [x] `oStrIndexOf(str: string, subStr: string, position = 0): number`
   对应原生string的 `indexOf` 方法
 
-目前Array的方法大部分已经实现, String的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法
++ [x] `oStrLastIndexOf(str: string, subStr?: string, position = +Infinity)`
+  对应原生string的 `lastIndexOf`
+
++ [x] `oStrLastIndexOf(str: string, subStr?: string, position = +Infinity)`
+  对应原生string的 `lastIndexOf`
+
++ [x] `oStrPadStart(str: string, targetLength?: number, padString = ' ')`
+  对应原生string的 `padStart`
+
++ [x] `oStrPadEnd(str: string, targetLength?: number, padString = ' ')`
+  对应原生string的 `padEnd`
+
++ [x] `oStrSlice(str: string, startIndex = 0, endIndex = str.length)`
+  对应原生string的 `slice`
+
++ [x] `oStrSubString(str: string, startIndex = 0, endIndex = str.length)`
+  对应原生string的 `substring`
+
++ [x] `oStrTrim(str: string)`
+  对应原生string的 `trim`
+
++ [x] `oStrTrimStart(str: string)`
+  对应原生string的 `trimStart`
+
++ [x] `oStrTrimEnd(str: string)`
+  对应原生string的 `trimEnd`
+
+目前Array, String的方法大部分已经实现, number相关的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法

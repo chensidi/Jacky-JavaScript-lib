@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/chensidi/Jacky-JavaScript-lib",
   "bugs": "https://github.com/chensidi/Jacky-JavaScript-lib/issues",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",

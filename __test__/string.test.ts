@@ -10,6 +10,10 @@ const {
   oStrLastIndexOf,
   oStrPadStart,
   oStrSlice,
+  oStrSubString,
+  oStrTrim,
+  oStrTrimStart,
+  oStrTrimEnd,
 } = require('../dist/index')
 
 describe('测试string的迭代器', () => {
@@ -260,5 +264,68 @@ describe('测试string的slice', () => {
   })
   test('越界测试5', () => {
     expect(oStrSlice('Jacky Cheung', -3, 3)).toBe('')
+  })
+})
+
+describe('测试string的substring方法', () => {
+  test('常规测试', () => {
+    expect(oStrSubString('Jacky Cheung')).toBe('Jacky Cheung')
+  })
+  test('常规测试2', () => {
+    expect(oStrSubString('Jacky Cheung', 2)).toBe('cky Cheung')
+  })
+  test('常规测试3', () => {
+    expect(oStrSubString('Jacky Cheung', 2, 4)).toBe('ck')
+  })
+  test('常规测试4', () => {
+    expect(oStrSubString('Jacky Cheung', 5, 0)).toBe('Jacky')
+  })
+  test('测试非正常下标', () => {
+    expect(oStrSubString('Jacky Cheung', -5, 1)).toBe('J')
+  })
+  test('测试非正常下标2', () => {
+    expect(oStrSubString('Jacky Cheung', 20, 1)).toBe('acky Cheung')
+  })
+  test('测试非正常下标2', () => {
+    expect(oStrSubString('Jacky Cheung', -20)).toBe('Jacky Cheung')
+  })
+  test('测试非正常下标3', () => {
+    expect(oStrSubString('Jacky Cheung', 3, NaN)).toBe('Jac')
+  })
+})
+
+describe('测试string的trim方法', () => {
+  test('常规测试', () => {
+    expect(oStrTrim('  jac ky  ')).toBe('jac ky')
+  })
+  test('常规测试2', () => {
+    expect(oStrTrim('  jac ky')).toBe('jac ky')
+  })
+  test('常规测试3', () => {
+    expect(oStrTrim('jack y  ')).toBe('jack y')
+  })
+})
+
+describe('测试string的trimStart方法', () => {
+  test('常规测试', () => {
+    expect(oStrTrimStart('   jacky    ')).toBe('jacky    ')
+  })
+  test('常规测试2', () => {
+    expect(oStrTrimStart('  jacky')).toBe('jacky')
+  })
+  test('常规测试3', () => {
+    expect(oStrTrimStart('jacky    ')).toBe('jacky    ')
+  })
+})
+
+describe('测试string的trimEnd方法', () => {
+  test('常规测试', () => {
+    expect(oStrTrimEnd('   jacky    ')).toBe('   jacky')
+  })
+  test('常规测试2', () => {
+    expect(oStrTrimEnd('  jac ky   ')).toBe('  jac ky')
+  })
+  test('常规测试3', () => {
+    expect(oStrTrimEnd('jac ky    ')).toBe('jac ky')
   })
 })

@@ -1,4 +1,4 @@
-import { toNum, toString } from '@utils'
+import { toNum, toString, trimEndReg, trimStartReg } from '@utils'
 
 /* 
   字符串原生es方法
@@ -224,6 +224,48 @@ function oStrSlice(str: string, startIndex = 0, endIndex = str.length): string {
   return targetStr
 }
 
+// substring
+function oStrSubString(str: string, startIndex = 0, endIndex = str.length): string {
+  str = String(str)
+  startIndex = toNum(startIndex)
+  endIndex = toNum(endIndex)
+
+  if (startIndex < 0) startIndex = 0
+  if (startIndex >= str.length) startIndex = str.length
+  if (endIndex < 0) endIndex = 0
+  if (endIndex >= str.length) endIndex = str.length
+  if (startIndex === endIndex) return ''
+  
+  let [s, e] = [Math.min(startIndex, endIndex), Math.max(startIndex, endIndex)]
+  let targetStr = ''
+  while (s < e) {
+    targetStr += str[s++]
+  }
+  return targetStr
+}
+
+// trim
+function oStrTrim(str: string): string {
+  str = String(str)
+  str = str.replace(trimStartReg, '')
+  str = str.replace(trimEndReg, '')
+  return str
+}
+
+// trimStart
+function oStrTrimStart(str: string): string {
+  str = String(str)
+  str = str.replace(trimStartReg, '')
+  return str
+}
+
+// trimEnd
+function oStrTrimEnd(str: string): string {
+  str = String(str)
+  str = str.replace(trimEndReg, '')
+  return str
+}
+
 export {
   oStringIterator,
   oStringGenerator,
@@ -237,4 +279,8 @@ export {
   oStrPadStart,
   oStrPadEnd,
   oStrSlice,
+  oStrSubString,
+  oStrTrim,
+  oStrTrimStart,
+  oStrTrimEnd,
 }
