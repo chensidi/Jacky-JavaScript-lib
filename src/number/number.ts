@@ -31,7 +31,7 @@ isNaN
 number上的isNaN与全局isNaN相比，更严格，只有才NaN这一种值的时候，才会返回true，其余情况一律返回false
 而全局的isNaN，会进行隐式转换为number类型，然后再判断是否为NaN
 */
-function oNumIsNaN(num: number) {
+function oNumIsNaN(num: number): boolean {
   if (typeof num !== 'number') return false
   return isNaN(num)
 }
@@ -44,7 +44,7 @@ Number身上原本没有提供这个方法，这是用来比较两个数字是�
 这个函数就是一个实现方法
 */
 
-function oNumEqual(n1: number, n2: number) {
+function oNumEqual(n1: number, n2: number): boolean {
   return Math.abs(n1 - n2) <= Number.EPSILON
 }
 
@@ -54,7 +54,7 @@ function oNumEqual(n1: number, n2: number) {
   然后再次转换为对应进制数
   本实现方法暂时没有实现浮点数的进制转换，仅实现对整数的进制转换
 */
-function oNumToString(num: number, bit = 10) {
+function oNumToString(num: number, bit = 10): string {
   num = Number(num)
   bit = Number(bit)
   const flag = num < 0

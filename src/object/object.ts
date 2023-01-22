@@ -3,7 +3,7 @@
 */
 
 // assign
-function oAssign(target: Record<any, any>, ...source: Record<any, any>[]) {
+function oAssign(target: Record<any, any>, ...source: Record<any, any>[]): object {
   const resTarget: Record<any, any> = target
   source.forEach(item => {
     for (const k in item) {
@@ -19,7 +19,7 @@ function oAssign(target: Record<any, any>, ...source: Record<any, any>[]) {
 }
 
 // create
-function oCreate(origin: object) {
+function oCreate(origin: object): object {
   const result = {}
   Object.setPrototypeOf(result, origin)
   return result
@@ -40,7 +40,7 @@ Object.is 主要是针对NaN，+0和-0的比较
 ps：这里有个技巧，由于 +0 === -0，所以利用 1 / +0 === Infinity, 1 / -0 === -Infinity 这个特点
 可以判断两者是 +0 还是 -0
 */
-function oIs(v1: any, v2: any) {
+function oIs(v1: any, v2: any): boolean {
   if (typeof v1 === typeof v2 && typeof v1 === 'number') {
     if (isNaN(v1) && isNaN(v2)) return true
     if (v1 === v2) {
@@ -51,10 +51,46 @@ function oIs(v1: any, v2: any) {
   return false
 }
 
+// freeze
+function oFreeze(origin: Record<any, any>) {
+  for (const k in origin) {
+    if (Object.hasOwn(origin, k)) {
+      Object.defineProperty(origin, k, {
+        'configurable': false,
+        'writable': false,
+      })
+    }
+  }
+}
+
+// keys
+function oKeys(origin: Record<any, any>): string[] {
+  const keys = []
+  for (const k in origin) {
+    if (Object.hasOwn(origin, k)) {
+      keys.push(k)
+    }
+  }
+  return keys
+}
+
+// values
+function oValues(origin: Record<any, any>): any[] {
+  const values = []
+  for (const k in origin) {
+    if (Object.hasOwn(origin, k)) {
+      values.push(origin[k])
+    }
+  }
+  return values
+}
 
 export {
   oAssign,
   oCreate,
   oHasOwn,
   oIs,
+  oFreeze,
+  oKeys,
+  oValues,
 }

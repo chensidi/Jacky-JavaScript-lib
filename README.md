@@ -200,4 +200,44 @@ oStrStartsWith(str, 'Jacky', 1) // false
 + [x] `oStrTrimEnd(str: string)`
   对应原生string的 `trimEnd`
 
-目前Array, String的方法大部分已经实现, number相关的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法
+### Number数字原生方法的实现
+
++ [x] `oNumIsFinite(num: number): boolean`
+  对应原生number的 `isFinite` 方法
+
++ [x] `oNumIsInteger(num: number): boolean`
+  对应原生number的 `isInteger` 方法
+
++ [x] `oNumIsNaN(num: number): boolean`
+  对应原生number的 `isNaN` 方法
+
++ [x] `oNumEqual(n1: number, n2: number): boolean`
+  原生没有这个方法，主要是js中的运算并不一定准确，所以该函数功能是比较两个数是否相等
+
++ [x] `oNumToString(num: number, bit = 10): string`
+  对应原生number的tostring方法
+
+### Object对象原生方法的实现
+
++ [x] `oAssign(target: Record<any, any>, ...source: Record<any, any>[]): object`
+  对应原生Object的assign方法
+
++ [x] `oCreate(origin: object): object`
+  对应原生Object的create方法
+
++ [x] `oHasOwn(origin: object, key: string | number | symbol): boolean`
+  对应原生Object的hasOwn方法
+
++ [x] `oIs(v1: any, v2: any): boolean`
+  对应原生Object的is方法
+
++ [x] `oFreeze(origin: Record<any, any>)`
+  对应原生Object的freeze方法
+
++ [x] `oKeys(origin: Record<any, any>): string[]`
+  对应原生Object的keys方法
+
++ [x] `oValues(origin: Record<any, any>): any[]`
+  对应原生Object的values方法
+
+目前Array, String, Number的方法大部分已经实现, object相关的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法
