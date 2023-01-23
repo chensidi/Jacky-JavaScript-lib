@@ -85,6 +85,17 @@ function oValues(origin: Record<any, any>): any[] {
   return values
 }
 
+// entries
+function oEntries(origin: Record<any, any>): Array<[any, any]> {
+  const entries: Array<[any, any]> = []
+  for (const k in origin) {
+    if (Object.hasOwn(origin, k)) {
+      entries.push([k, origin[k]])
+    }
+  }
+  return entries
+}
+
 export {
   oAssign,
   oCreate,
@@ -93,4 +104,5 @@ export {
   oFreeze,
   oKeys,
   oValues,
+  oEntries,
 }
