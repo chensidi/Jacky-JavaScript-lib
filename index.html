@@ -17,8 +17,9 @@
 })()
 </script> -->
 <script type="module">
-import {oMap} from './dist/index.esm.js'
-const res = oMap([1,2,3], item => item * 2)
-console.log(res);
+import { OSet } from './dist/index.esm.js'
+
+const s = new OSet([1,2,3])
+console.log(s)
 </script>
 </html>
