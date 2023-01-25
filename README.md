@@ -256,7 +256,7 @@ oStrStartsWith(str, 'Jacky', 1) // false
 
 ### Set 数据结构实现
   
-+ [x] `oSet`
+  + [x] `oSet`
   调用方式与原生 `Set` 一致，实例化之后会拥有和原生 `Set` 对象一致的属性和方法
   + has
   + add
@@ -266,5 +266,19 @@ oStrStartsWith(str, 'Jacky', 1) // false
   + entries
   + forEach
   + size
+
+### Map 数据结构实现
+
+  调用方式与原生 `Map` 一致，实例化之后会拥有和原生 `Map` 对象一致的属性和方法
+  
+  + get
+  + set
+  + has
+  + delete
+  + keys
+  + entries
+  + values
+  + size
+  + forEach
 
 目前Array, String, Number, Object, Function的方法大部分已经实现, 其他相关的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法
