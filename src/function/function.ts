@@ -53,10 +53,63 @@ function oCurry(fn: (...arg: any[]) => any, ...args: any[]) {
   return fns()
 }
 
+// 防抖
+/* 
+  const fn = debounce(() => console.log('jacky'), 100)
+*/
+
+function oDebounce(fn: Function, wait = 0, {
+  leading,
+  maxWait
+} = {} as {
+  leading: boolean
+  maxWait: number
+}) {
+  let timer: null | NodeJS.Timeout = null
+  let maxTimer: null | NodeJS.Timeout = null
+  return function (...arg: any[]) {
+    if (!timer) {
+      if (leading) {
+        leading = false
+        return fn(...arg)
+      }
+      timer = setTimeout(() => {
+        fn(...arg)
+        timer = null
+        if (leading != null) {
+          leading = true
+        }
+        maxTimer && clearTimeout(maxTimer)
+      }, wait)
+      if (maxWait && maxWait > wait) {
+        maxTimer = setTimeout(() => {
+          fn(...arg)
+          timer && clearTimeout(timer)
+          timer = null
+          if (leading != null) {
+            leading = true
+          }
+        }, maxWait)
+      }
+    } else {
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        fn(...arg)
+        timer = null
+        if (leading != null) {
+          leading = true
+        }
+        maxTimer && clearTimeout(maxTimer)
+      }, wait)
+    }
+  }
+}
+
 
 export {
   oCall,
   oApply,
   oBind,
   oCurry,
+  oDebounce,
 }

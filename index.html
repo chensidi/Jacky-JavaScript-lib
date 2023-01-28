@@ -7,7 +7,9 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <button id="btn">
+    click
+  </button>
 </body>
 <!-- <script src="./dist/index.aio.js"></script>
 <script>
@@ -17,9 +19,23 @@
 })()
 </script> -->
 <script type="module">
-import { OSet } from './dist/index.esm.js'
+import { oDebounce } from './dist/index.esm.js'
 
-const s = new OSet([1,2,3])
-console.log(s)
+const getTime = () => Date.now()
+let time
+const btn = document.querySelector('#btn')
+function msg () {
+  console.log(this.name)
+}
+function exec() {
+
+}
+const clickHandle = oDebounce(msg.bind({name: 'xx'}), 250, {
+  maxWait: 1000
+})
+
+btn.addEventListener('click', () => {
+  clickHandle()
+})
 </script>
 </html>

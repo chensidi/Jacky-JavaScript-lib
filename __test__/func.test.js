@@ -2,7 +2,7 @@
   常用function方法测试
 */
 
-const { oApply, oCall, oBind, oCurry } = require('../dist/index')
+const { oApply, oCall, oBind, oCurry, oDebounce } = require('../dist/index')
 
 describe('测试function的call方法', () => {
   test('常规测试', () => {
@@ -57,9 +57,9 @@ describe('测试function的apply方法', () => {
 describe('测试function的bind方法', () => {
   const module = {
     x: 42,
-    getX: function(num) {
-      return this.x + num;
-    }
+    getX: function (num) {
+      return this.x + num
+    },
   }
   const unboundGetX = module.getX
   test('常规测试', () => {
@@ -76,33 +76,27 @@ describe('测试function的bind方法', () => {
   })
 })
 
-describe('测试柯里化', () => { 
+describe('测试柯里化', () => {
   test('常规测试', () => {
     const add = (x, y) => x + y
     const fn = oCurry(add)
-    expect(
-      fn(1, 2)
-    ).toBe(3)
-  })  
+    expect(fn(1, 2)).toBe(3)
+  })
   test('常规测试2', () => {
     const add = (x, y) => x + y
     const fn = oCurry(add)
-    expect(
-      fn(1)(2, 3)
-    ).toBe(3)
+    expect(fn(1)(2, 3)).toBe(3)
   })
   test('常规测试3', () => {
     const add = (x, y) => x + y
     const fn = oCurry(add, 1, 100)
-    expect(
-      fn(1)
-    ).toBe(101)
+    expect(fn(1)).toBe(101)
   })
   test('常规测试4', () => {
     const add = (x, y) => x + y
     const fn = oCurry(add, 1)
-    expect(
-      fn(100, 200)
-    ).toBe(101)
+    expect(fn(100, 200)).toBe(101)
   })
 })
+
+describe('测试防抖函数', () => {})
