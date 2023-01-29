@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <button id="btn">
     click
@@ -19,23 +21,28 @@
 })()
 </script> -->
 <script type="module">
-import { oDebounce } from './dist/index.esm.js'
+  import { OPromise } from './dist/index.esm.js'
 
-const getTime = () => Date.now()
-let time
-const btn = document.querySelector('#btn')
-function msg () {
-  console.log(this.name)
-}
-function exec() {
+  const p = new OPromise((resolve, reject) => {
+    console.log('1')
+    resolve(3)
+  })
 
-}
-const clickHandle = oDebounce(msg.bind({name: 'xx'}), 250, {
-  maxWait: 1000
-})
+  setTimeout(() => {
+    console.log(4);
+  }, )
 
-btn.addEventListener('click', () => {
-  clickHandle()
-})
+  p.then((res) => {
+    console.log(res)
+  }, rej => {
+    console.log(rej)
+  })
+
+  p.catch(res => {
+    console.log(res + 'hehe')
+  })
+
+  console.log('2')
 </script>
+
 </html>
