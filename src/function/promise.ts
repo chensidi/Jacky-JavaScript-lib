@@ -14,16 +14,34 @@ class OPromise {
 
   private resolveHandle: Function[] = []
   private rejectHandle: Function[] = []
+  private nextResolveHandle: Function[] = []
+  private nextRejectHandle: Function[] = []
 
   constructor(exec: (resolve: Function, reject: Function) => void) {
-    exec(this.resolve.bind(this), this.reject.bind(this))
+    try {
+      exec(this.resolve.bind(this), this.reject.bind(this))
+    } catch (e) {
+      this.reject.bind(this)(e)
+    }
   }
   private resolve(result: any) {
     if (this.status === this.pendingStatus) {
       this.result = result
       this.status = this.fullfiledStatus
       setTimeout(() => {
-        this.resolveHandle.forEach(fn => fn(this.result))
+        this.resolveHandle.forEach(fn => {
+          try {
+            const res = fn(this.result)
+            setTimeout(() => {
+              this.nextResolveHandle.forEach(fn => fn(res))
+            })
+          } catch (e) {
+            const rej = e
+            setTimeout(() => {
+              this.nextRejectHandle.forEach(fn => fn(rej))
+            })
+          }
+        })
       })
     }
   }
@@ -32,7 +50,19 @@ class OPromise {
       this.reason = reason
       this.status = this.rejectStatus
       setTimeout(() => {
-        this.rejectHandle.forEach(fn => fn(this.reason))
+        this.rejectHandle.forEach(fn => {
+          try {
+            const res = fn(this.reason)
+            setTimeout(() => {
+              this.nextResolveHandle.forEach(fn => fn(res))
+            })
+          } catch (e) {
+            const rej = e
+            setTimeout(() => {
+              this.nextRejectHandle.forEach(fn => fn(rej))
+            })
+          }
+        })
       })
     }
   }
@@ -44,6 +74,14 @@ class OPromise {
     if (typeof rejectCallback === 'function') {
       this.rejectHandle.push(rejectCallback)
     }
+    return new OPromise((resolve, reject) => {
+      this.nextResolveHandle.push((res: any) => {
+        resolve(res)
+      })
+      this.nextRejectHandle.push((rej: any) => {
+        reject(rej)
+      })
+    })
   }
 
   public catch(rejectCallback: Function) {

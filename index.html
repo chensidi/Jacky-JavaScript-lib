@@ -24,25 +24,27 @@
   import { OPromise } from './dist/index.esm.js'
 
   const p = new OPromise((resolve, reject) => {
-    console.log('1')
-    resolve(3)
+    setTimeout(() => {
+      resolve(3)
+    }, 1000)
   })
-
-  setTimeout(() => {
-    console.log(4);
-  }, )
 
   p.then((res) => {
+    console.log('first')
     console.log(res)
+    return 'jacky'
   }, rej => {
     console.log(rej)
+  }).then(res => {
+    console.log('-----next')
+    console.log(res)
+  }).then(res => {
+    console.log('again')
+    console.log(res);
+  }, rej => {
+    console.log('rej: ', rej);
   })
 
-  p.catch(res => {
-    console.log(res + 'hehe')
-  })
-
-  console.log('2')
 </script>
 
 </html>
