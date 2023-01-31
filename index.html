@@ -25,25 +25,21 @@
 
   const p = new OPromise((resolve, reject) => {
     setTimeout(() => {
-      resolve(3)
+      reject(3)
     }, 1000)
   })
 
-  p.then((res) => {
-    console.log('first')
+  p.catch(res => {
     console.log(res)
-    return 'jacky'
-  }, rej => {
-    console.log(rej)
-  }).then(res => {
-    console.log('-----next')
+    throw res + 1
+  }).catch(res => {
     console.log(res)
-  }).then(res => {
-    console.log('again')
-    console.log(res);
-  }, rej => {
-    console.log('rej: ', rej);
   })
+
+  OPromise.reject(1).catch(res => {
+    console.log(res)
+  })
+  console.log(100)
 
 </script>
 

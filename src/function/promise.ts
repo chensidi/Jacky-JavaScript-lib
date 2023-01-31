@@ -7,8 +7,8 @@ class OPromise {
   private reason = undefined
 
   private pendingStatus = 'PENDING'
-  private fullfiledStatus = 'FULLFILED'
-  private rejectStatus = 'REJECTED'
+  private fulfilledStatus = 'FULFILLED'
+  private rejectedStatus = 'REJECTED'
 
   private status = this.pendingStatus
 
@@ -27,14 +27,22 @@ class OPromise {
   private resolve(result: any) {
     if (this.status === this.pendingStatus) {
       this.result = result
-      this.status = this.fullfiledStatus
+      this.status = this.fulfilledStatus
       setTimeout(() => {
         this.resolveHandle.forEach(fn => {
           try {
             const res = fn(this.result)
-            setTimeout(() => {
-              this.nextResolveHandle.forEach(fn => fn(res))
-            })
+            if (res instanceof OPromise) {
+              res.then((_res: any) => {
+                this.nextResolveHandle.forEach(fn => fn(_res))
+              }, (_rej: any) => {
+                this.nextRejectHandle.forEach(fn => fn(_rej))
+              })
+            } else {
+              setTimeout(() => {
+                this.nextResolveHandle.forEach(fn => fn(res))
+              })
+            }
           } catch (e) {
             const rej = e
             setTimeout(() => {
@@ -48,14 +56,22 @@ class OPromise {
   private reject(reason: any) {
     if (this.status === this.pendingStatus) {
       this.reason = reason
-      this.status = this.rejectStatus
+      this.status = this.rejectedStatus
       setTimeout(() => {
         this.rejectHandle.forEach(fn => {
           try {
             const res = fn(this.reason)
-            setTimeout(() => {
-              this.nextResolveHandle.forEach(fn => fn(res))
-            })
+            if (res instanceof OPromise) {
+              res.then((_res: any) => {
+                this.nextResolveHandle.forEach(fn => fn(_res))
+              }, (_rej: any) => {
+                this.nextRejectHandle.forEach(fn => fn(_rej))
+              })
+            } else {
+              setTimeout(() => {
+                this.nextResolveHandle.forEach(fn => fn(res))
+              })
+            }
           } catch (e) {
             const rej = e
             setTimeout(() => {
@@ -88,7 +104,29 @@ class OPromise {
     if (typeof rejectCallback === 'function') {
       this.rejectHandle.push(rejectCallback)
     }
+    return new OPromise((resolve, reject) => {
+      this.nextResolveHandle.push((res: any) => {
+        resolve(res)
+      })
+      this.nextRejectHandle.push((rej: any) => {
+        reject(rej)
+      })
+    }) 
   }
+
+  static resolve(res: any) {
+    return new OPromise(resolve => {
+      resolve(res)
+    })
+  }
+
+  static reject(rej: any) {
+    return new OPromise((resolve, reject) => {
+      reject(rej)
+    })
+  }
+
+  // TODO: 实现 promose.all, any, race等
 }
 
 export { OPromise }
