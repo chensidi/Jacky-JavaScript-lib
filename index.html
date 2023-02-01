@@ -23,24 +23,41 @@
 <script type="module">
   import { OPromise } from './dist/index.esm.js'
 
-  const p = new OPromise((resolve, reject) => {
-    setTimeout(() => {
-      reject(3)
-    }, 1000)
-  })
+  // const p = new OPromise((resolve, reject) => {
+  //   setTimeout(() => {
+  //     reject(3)
+  //   }, 1000)
+  // })
 
-  p.catch(res => {
-    console.log(res)
-    throw res + 1
-  }).catch(res => {
-    console.log(res)
-  })
+  // p.catch(res => {
+  //   console.log(res)
+  //   throw res + 1
+  // }).catch(res => {
+  //   console.log(res)
+  // })
 
-  OPromise.reject(1).catch(res => {
-    console.log(res)
-  })
-  console.log(100)
+  // OPromise.reject(1).catch(res => {
+  //   console.log(res)
+  // })
+  // console.log(100)
 
+  const p1 = new OPromise((resolve, reject) => {
+    setTimeout(reject, 1000, 1000)
+  })
+  const p2 = new OPromise((resolve) => {
+    setTimeout(resolve, 2000, 2000)
+  })
+  OPromise.all([p1, p2, 300]).then(res => {
+    console.log(res);
+  }).catch(rej => {
+    console.log('rejs');
+  })
+  // p1.then(res => {
+  //   console.log('res: ', res);
+  // }).catch(rej => {
+  //   console.log('rej1: ', rej);
+
+  // })
 </script>
 
 </html>

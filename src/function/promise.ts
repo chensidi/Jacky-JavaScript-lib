@@ -69,7 +69,12 @@ class OPromise {
               })
             } else {
               setTimeout(() => {
-                this.nextResolveHandle.forEach(fn => fn(res))
+                if (this.status === this.fulfilledStatus) {
+                  this.nextResolveHandle.forEach(fn => fn(res))
+                }
+                if(this.status === this.rejectedStatus) {
+                  this.nextRejectHandle.forEach(fn => fn(res))
+                }
               })
             }
           } catch (e) {
@@ -83,7 +88,10 @@ class OPromise {
     }
   }
 
-  public then(resolveCallback: Function, rejectCallback: Function) {
+  public then(resolveCallback: Function, rejectCallback?: Function) {
+    if (rejectCallback === undefined) {
+      rejectCallback = function() {}
+    }
     if (typeof resolveCallback === 'function') {
       this.resolveHandle.push(resolveCallback)
     }
@@ -127,6 +135,31 @@ class OPromise {
   }
 
   // TODO: 实现 promose.all, any, race等
+  // TODO: 当then的第二个参数执行后，后面若也有catch则忽略
+  static all(promiseList: any[]) {
+    const _p = new OPromise((resolve, reject) => {
+      const resArr = [] as any[]
+      const idxArr = Array(promiseList.length).fill(undefined)
+      promiseList.forEach((item, idx) => {
+        if (item instanceof OPromise) {
+          item.then((res: any) => {
+            resArr[idx] = res
+            idxArr.pop()
+            if (idxArr.length === 0) {
+              resolve([...resArr])
+            }
+          })
+          item.catch((rej: any) => {
+            reject(rej)
+          })
+        } else {
+          resArr[idx] = item
+          idxArr.pop()
+        }
+      })
+    })
+    return _p
+  }
 }
 
 export { OPromise }
