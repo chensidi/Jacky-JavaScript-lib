@@ -22,7 +22,7 @@
 </script> -->
 <script type="module">
   import { OPromise } from './dist/index.esm.js'
-
+  return false
   // const p = new OPromise((resolve, reject) => {
   //   setTimeout(() => {
   //     reject(3)
@@ -42,7 +42,7 @@
   // console.log(100)
 
   const p1 = new OPromise((resolve, reject) => {
-    setTimeout(reject, 1000, 1000)
+    setTimeout(resolve, 1000, 1000)
   })
   const p2 = new OPromise((resolve) => {
     setTimeout(resolve, 2000, 2000)
@@ -52,12 +52,52 @@
   }).catch(rej => {
     console.log('rejs');
   })
-  // p1.then(res => {
-  //   console.log('res: ', res);
-  // }).catch(rej => {
-  //   console.log('rej1: ', rej);
+  p1.then(res => {
+    return 111
+  }).then(rej => {
+    console.log('res1: ', rej);
+  })
 
+  // p1.then(res => {
+  //   return 222
+  // }).then(res => {
+  //   console.log('res2: ', res);
   // })
 </script>
 
+<script type="module">
+  import { oPromiseTasks } from './dist/index.esm.js'
+  
+  const mockPromise = (time) => {
+    return new Promise(res => {
+      setTimeout(res, time, time)
+    })
+  }
+
+  const _p1 = async () => {
+    const res = await mockPromise(400)
+    console.log(res)
+  }
+
+  const _p2 = async () => {
+    const res = await mockPromise(200)
+    console.log(res)
+  }
+
+  const _p3 = async () => {
+    const res = await mockPromise(100)
+    console.log(res)
+  }
+
+  const _p4 = async () => {
+    const res = await mockPromise(500)
+    console.log(res)
+  }
+
+  const _p5 = () => mockPromise(250).then(res => {
+    console.log(res)
+  })
+
+  oPromiseTasks([_p1, _p2, _p3, _p4, _p5], 3)
+</script>
 </html>
