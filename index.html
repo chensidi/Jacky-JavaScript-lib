@@ -22,7 +22,6 @@
 </script> -->
 <script type="module">
   import { OPromise } from './dist/index.esm.js'
-  return false
   // const p = new OPromise((resolve, reject) => {
   //   setTimeout(() => {
   //     reject(3)
@@ -42,21 +41,28 @@
   // console.log(100)
 
   const p1 = new OPromise((resolve, reject) => {
-    setTimeout(resolve, 1000, 1000)
+    setTimeout(reject, 1000, 1000)
   })
   const p2 = new OPromise((resolve) => {
     setTimeout(resolve, 2000, 2000)
   })
-  OPromise.all([p1, p2, 300]).then(res => {
-    console.log(res);
+  
+  OPromise.any([p1, p2, 2]).then(res => {
+    console.log('all res', res);
+    return 1000
   }).catch(rej => {
-    console.log('rejs');
+    console.log('all rej', rej);
   })
+
   p1.then(res => {
-    return 111
-  }).then(rej => {
-    console.log('res1: ', rej);
+    console.log('p1 res', res)
+    return 222
+  }).catch(rej => {
+    console.log('p1 rej', rej)
   })
+
+  console.log(p1)
+  
 
   // p1.then(res => {
   //   return 222
@@ -65,7 +71,7 @@
   // })
 </script>
 
-<script type="module">
+<!-- <script type="module">
   import { oPromiseTasks } from './dist/index.esm.js'
   
   const mockPromise = (time) => {
@@ -99,5 +105,5 @@
   })
 
   oPromiseTasks([_p1, _p2, _p3, _p4, _p5], 3)
-</script>
+</script> -->
 </html>

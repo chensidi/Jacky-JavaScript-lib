@@ -185,13 +185,61 @@ class OPromise {
             if (idxArr.length === 0) {
               resolve([...resArr])
             }
-          })
-          item.catch((rej: any) => {
+            return res
+          }, (rej: any) => {
             reject(rej)
+            return rej
           })
+          item.nextCatchHandle.pop()
+          item.nextResolveHandle.pop()
+          item.nextRejectHandle.pop()
+
         } else {
           resArr[idx] = item
           idxArr.pop()
+        }
+      })
+    })
+    return _p
+  }
+
+  static race(promiseList: any[]) {
+    const _p = new OPromise((resolve, reject) => {
+      promiseList.forEach((item, idx) => {
+        if (item instanceof OPromise) {
+          item.then((res: any) => {
+            resolve(res)
+            return res
+          }, (rej: any) => {
+            reject(rej)
+            return rej
+          })
+          item.nextCatchHandle.pop()
+          item.nextResolveHandle.pop()
+          item.nextRejectHandle.pop()
+
+        } else {
+          resolve(item)
+        }
+      })
+    })
+    return _p
+  }
+
+  static any(promiseList: any[]) {
+    const _p = new OPromise((resolve, reject) => {
+      promiseList.forEach((item, idx) => {
+        if (item instanceof OPromise) {
+          item.then((res: any) => {
+            resolve(res)
+            return res
+          })
+          item.nextCatchHandle.pop()
+          item.nextResolveHandle.pop()
+          item.nextRejectHandle.pop()
+
+        } else {
+          resolve(item)
         }
       })
     })
