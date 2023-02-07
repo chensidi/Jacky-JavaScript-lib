@@ -41,25 +41,26 @@
   // console.log(100)
 
   const p1 = new OPromise((resolve, reject) => {
-    setTimeout(reject, 1000, 1000)
+    setTimeout(resolve, 1000, 1000)
   })
-  const p2 = new OPromise((resolve) => {
-    setTimeout(resolve, 2000, 2000)
+  const p2 = new OPromise((resolve, reject) => {
+    setTimeout(reject, 2000, 2000)
   })
   
-  OPromise.any([p1, p2, 2]).then(res => {
-    console.log('all res', res);
-    return 1000
-  }).catch(rej => {
-    console.log('all rej', rej);
-  })
+  // OPromise.allSettled([p1, p2]).then(res => {
+  //   console.log('all res', res);
+  //   return 1000
+  // }).catch(rej => {
+  //   console.log('all rej', rej);
+  // })
 
   p1.then(res => {
     console.log('p1 res', res)
     return 222
-  }).catch(rej => {
+  }, rej => {
     console.log('p1 rej', rej)
   })
+
 
   console.log(p1)
   

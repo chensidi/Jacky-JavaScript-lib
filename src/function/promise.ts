@@ -15,10 +15,12 @@ class OPromise {
   private resolveHandle: Function[] = []
   private rejectHandle: Function[] = []
   private catchHandle: Function[] = []
+  private finalHandle: Function[] = []
 
   private nextResolveHandle: Function[] = []
   private nextRejectHandle: Function[] = []
   private nextCatchHandle: Function[] = []
+  private nextFinalHandle: Function[] = []
 
   constructor(exec: (resolve: Function, reject: Function) => void) {
     try {
@@ -139,6 +141,9 @@ class OPromise {
       this.nextCatchHandle.push((rej: any) => {
         reject(rej)
       })
+      this.nextFinalHandle.push((res: any) => {
+        resolve(res)
+      })
     })
   }
 
@@ -156,6 +161,29 @@ class OPromise {
       this.nextCatchHandle.push((rej: any) => {
         reject(rej)
       })
+      this.nextFinalHandle.push((res: any) => {
+        resolve(res)
+      })
+    })
+  }
+
+  public finally(finalCallback: Function) {
+    if (typeof finalCallback === 'function') {
+      this.finalHandle.push(finalCallback)
+    }
+    return new OPromise((resolve, reject) => {
+      this.nextResolveHandle.push((res: any) => {
+        resolve(res)
+      })
+      this.nextRejectHandle.push((rej: any) => {
+        reject(rej)
+      })
+      this.nextCatchHandle.push((rej: any) => {
+        reject(rej)
+      })
+      this.nextFinalHandle.push((res: any) => {
+        resolve(res)
+      })
     })
   }
 
@@ -171,8 +199,6 @@ class OPromise {
     })
   }
 
-  // TODO: 实现 promose.all, any, race等
-  // TODO: 当then的第二个参数执行后，后面若也有catch则忽略
   static all(promiseList: any[]) {
     const _p = new OPromise((resolve, reject) => {
       const resArr = [] as any[]
@@ -228,18 +254,65 @@ class OPromise {
 
   static any(promiseList: any[]) {
     const _p = new OPromise((resolve, reject) => {
+      const rejectArr = []
       promiseList.forEach((item, idx) => {
         if (item instanceof OPromise) {
           item.then((res: any) => {
             resolve(res)
             return res
+          }, (rej: any) => {
+            rejectArr.push(rej)
+            if (rejectArr.length === promiseList.length) {
+              reject('all rej AggregateError: All promises were rejected')
+            }
+            return rej
           })
           item.nextCatchHandle.pop()
           item.nextResolveHandle.pop()
           item.nextRejectHandle.pop()
-
         } else {
           resolve(item)
+        }
+      })
+    })
+    return _p
+  }
+
+  static allSettled(promiseList: any[]) {
+    const _p = new OPromise((resolve, reject) => {
+      const resArr: any[] = []
+      promiseList.forEach((item, idx) => {
+        if (item instanceof OPromise) {
+          item.then((res: any) => {
+            resArr.push({
+              status: 'fulfilled',
+              value: res,
+            })
+            if (resArr.length === promiseList.length) {
+              resolve(resArr)
+            }
+            return res
+          }, (rej: any) => {
+            resArr.push({
+              status: 'rejected',
+              reason: rej
+            })
+            if (resArr.length === promiseList.length) {
+              resolve(resArr)
+            }
+            return rej
+          })
+          item.nextCatchHandle.pop()
+          item.nextResolveHandle.pop()
+          item.nextRejectHandle.pop()
+        } else {
+          resArr.push({
+            status: 'fulfilled',
+            value: item,
+          })
+          if (resArr.length === promiseList.length) {
+            resolve(resArr)
+          }
         }
       })
     })
