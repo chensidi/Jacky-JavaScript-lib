@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/chensidi/Jacky-JavaScript-lib",
   "bugs": "https://github.com/chensidi/Jacky-JavaScript-lib/issues",
-  "version": "1.4.10",
+  "version": "1.4.11",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
@@ -51,7 +51,7 @@
     "build:es:min": "cross-env NODE_ENV=production rollup -c config/rollup.config.esm.js",
     "build:aio:min": "cross-env NODE_ENV=production rollup -c config/rollup.config.aio.js",
     "build": "rollup -c config/rollup.config.js && rollup -c config/rollup.config.esm.js && rollup -c config/rollup.config.aio.js",
-    "build:min": "cross-env NODE_ENV=production rollup -c config/rollup.config.js && rollup -c config/rollup.config.esm.js && rollup -c config/rollup.config.aio.js"
+    "build:min": "cross-env NODE_ENV=production rollup -c config/rollup.config.js && cross-env NODE_ENV=production rollup -c config/rollup.config.esm.js && cross-env NODE_ENV=production rollup -c config/rollup.config.aio.js"
   },
   "dependencies": {
     "axios": "1.1.3",
