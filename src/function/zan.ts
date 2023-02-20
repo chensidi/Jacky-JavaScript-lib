@@ -26,13 +26,11 @@ function changeAnimation(
   let { x, y } = pos
   const { height } = canvasDom
   const color = getColors()
-  const minOpacity = 0.5,
+  const minOpacity = 0.6,
     maxOpacity = 1,
     maxInc = 0.04,
     minInc = 0.01
   
-  // let initSpeedY = getRandom(9, 11, 2),
-  // initSpeedX = getRandom(1, 2, 2) * (Math.random() - 0.5 > 0 ? 1 : -1)
   let initSpeedX = Math.cos(angle * Math.PI / 180) * 10 * (
     1 - Math.floor(i / 10) * 0.1 
   ),
@@ -44,9 +42,9 @@ function changeAnimation(
         downG = -0.2
     
   let curOpacity = minOpacity
-
+  const [drawHandle, clearHandle] = getDrawHandle(ctx)
   const startShow = () => {
-    ctx.clearRect(x, y, 5, 5)
+    clearHandle(x, y)
     const inc = Math.random() * (maxInc - minInc) + minInc
     curOpacity += inc
     if (curOpacity >= maxOpacity) {
@@ -62,7 +60,7 @@ function changeAnimation(
     initSpeedY = _y
     x = Math.floor(initSpeedX + x)
     y = Math.floor(y - initSpeedY)
-    ctx.fillRect(x, y, 5, 5)
+    drawHandle(x, y)
     if (initSpeedY <= 0) {
       startHide()
     } else {
@@ -71,7 +69,7 @@ function changeAnimation(
   }
 
   const startHide = () => {
-    ctx.clearRect(x, y, 5, 5)
+    clearHandle(x, y)
     const dec = Math.random() * (maxInc - minInc) + minInc
     curOpacity -= dec
     if (curOpacity <= minOpacity) {
@@ -87,9 +85,9 @@ function changeAnimation(
     initSpeedY = _y
     x = Math.floor(initSpeedX + x)
     y = Math.floor(y - initSpeedY)
-    ctx.fillRect(x, y, 5, 5)
+    drawHandle(x, y)
     if (y >= height * 0.9) {
-      ctx.clearRect(x, y, 5, 5)
+      clearHandle(x, y)
       return
     } else {
       window.requestAnimationFrame(startHide)
@@ -155,7 +153,25 @@ function getColors() {
 
 function getAngle(start: number, end: number, idx: number, count: number) {
   const itemAngle = (end - start) / count * (count / 10)
-  return itemAngle * (idx % 10) + start + getRandom(-5, 5)
+  return itemAngle * (idx % 10) + start + getRandom(-6, 6)
+}
+
+function getDrawHandle(ctx: CanvasRenderingContext2D) {
+  const num = Math.random() > 0.6
+  if (num) {
+    return [(x: number, y: number) => ctx.fillRect(x, y, 6, 6), (x: number, y: number) => ctx.clearRect(x, y, 6, 6)]
+  }
+  const drawCircle = (x: number, y: number) => {
+    ctx.beginPath()
+    ctx.moveTo(x, y)
+    ctx.arc(x, y, 3, 0, Math.PI * 2, true)
+    ctx.closePath()
+    ctx.fill()
+  }
+  const clearCircle = (x: number, y: number) => {
+    ctx.clearRect(x - 3, y - 3, 6, 6)
+  }
+  return [drawCircle, clearCircle]
 }
 
 export {

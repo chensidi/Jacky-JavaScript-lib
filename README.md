@@ -281,4 +281,18 @@ oStrStartsWith(str, 'Jacky', 1) // false
   + size
   + forEach
 
+### canvas相关趣味函数
+  + signPanel(
+      dom: HTMLElement,
+      { width = 300, height = 500, color = 'blue', penWidth = 1, bg = 'white' }
+    )
+    canvas实现的签名板，可通过参数设置大小，背景色和笔色以及粗细
+    示例: 
+    ```ts
+    signPanel(document.getElementById('dom'), { color: 'red', penWidth: 2, bg: 'rgba(0, 2, 0, 1)' })
+    ```
+
+  + createZan(canvasDom: HTMLCanvasElement)
+  canvas实现点赞动效
+
 目前Array, String, Number, Object, Function的方法大部分已经实现, 其他相关的方法正在实现中... 功能清单正在抓紧时间更新同步中，大家可以通过vscode提示找到对应函数，也可以通过编辑器自动提示导出对应函数，也可以通过上GitHub找到该项目的测试用例查看调用方法
