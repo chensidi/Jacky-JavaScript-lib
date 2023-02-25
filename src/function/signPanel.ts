@@ -9,7 +9,7 @@ const signPanel = (
   const eraser = createCanvasEraser(wrap)
   const ctx = canvasDom.getContext('2d')
   wrap.appendChild(canvasDom)
-  const tools = createTools(ctx!, { width, penWidth, bg })
+  const tools = createTools(ctx!, { width, penWidth, bg, eraser })
   dom.appendChild(wrap)
   dom.appendChild(tools)
   initCanvas(canvasDom, ctx!, bg)
@@ -24,25 +24,25 @@ const signPanel = (
   ) {
     let down = false
 
-    canvasDom.addEventListener('mousedown', e => {
+    wrap.addEventListener('mousedown', e => {
       const { x, y } = e
       down = true
       ctx.beginPath()
       const [_x, _y] = getPosition(canvasDom, x, y)
       ctx.moveTo(_x, _y)
     })
-    canvasDom.addEventListener('mousemove', e => {
+    wrap.addEventListener('mousemove', e => {
       const { x, y } = e
       const [_x, _y] = getPosition(canvasDom, x, y)
       if (down) {
         drawLine(ctx, _x, _y)
       }
     })
-    canvasDom.addEventListener('mouseup', e => {
+    wrap.addEventListener('mouseup', e => {
       down = false
       ctx.closePath()
     })
-    canvasDom.addEventListener('mouseleave', () => {
+    wrap.addEventListener('mouseleave', () => {
       down = false
       ctx.closePath()
     })
